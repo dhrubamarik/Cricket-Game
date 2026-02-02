@@ -1,0 +1,27 @@
+#container{
+    text-align: center;
+    margin-top: 50px;
+}
+.pictures{
+    height: 100px;
+    width: 100px;
+    
+}
+.buttons{
+    background-color: rgb(32, 164, 109);
+    height: 150px;
+    width:150px;
+    margin: 10px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+#reset{
+    background-color: rgb(213, 132, 117);
+    height: 50px;
+    width:100px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}

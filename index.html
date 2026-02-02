@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRICKET</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+    <h1>Bat Ball Stumps game</h1>
+    <button class="buttons" onclick="
+    let choice=computerChoice();
+    let resultMsg=game('BAT', choice);
+    result('BAT', choice,resultMsg);
+    "><img class="pictures" src="images/bat.png" alt="BAT"></button>
+    <button class="buttons" onclick="
+    choice=computerChoice();
+    resultMsg=game('BALL', choice);
+    result('BALL', choice,resultMsg);
+    "><img class="pictures" src="images/ball.png" alt="BALL"></button>
+    <button class="buttons" onclick="
+    choice=computerChoice();
+    resultMsg=game('STUMPS', choice);
+    result('STUMPS', choice,resultMsg);
+    "><img class="pictures" src="images/stump.png" alt="STUMPS"></button>
+    <div>
+        <h3 id="UserMove"></h3>
+        <h3 id="ComputerMove"></h3>
+        <h3 id="Result"></h3>
+        <h3 id="Score"></h3>
+    </div>
+    <button id="reset" onclick="localStorage.clear();
+     resetScore();
+     ">RESET</button>
+    <script>
+        let scorestr=localStorage.getItem('score');
+        let score;
+        resetScore(scorestr);
+        alert('Welcome to Bat Ball Stumps game. Choose your option and see if you can win against computer');  
+        function resetScore(scorestr){
+            if(scorestr!==undefined){
+                score=JSON.parse(scorestr);
+            }else{
+                score={
+                  win: 0,
+                  lose: 0,
+                  draw: 0,
+               };
+            }
+            score.displayScore=function(){
+                return(`Wins: ${this.win}, Losses: ${this.lose}, Draws: ${this.draw}`);
+            }
+            result();
+        }
+        function computerChoice(){
+            let randomNumber=Math.random()*3;
+            if(randomNumber>0 && randomNumber<1){
+              return 'BAT';
+            }else if(randomNumber>1 && randomNumber<2){
+              return'BALL';
+            }else{
+              return'STUMPS';
+            }
+        }
+        function game(userChoice, choice){
+            if(userChoice==='BAT'){
+                if(choice==='BALL'){
+                    score.win++;
+                    return 'You won';
+                }else if(choice==='BAT'){
+                    score.draw++;
+                    return 'Match Draw';
+                }else if(choice==='STUMPS'){
+                    score.lose++;
+                    return 'You Lose';                   
+                }
+            }else if(userChoice==='BALL'){
+                if(choice==='BALL'){
+                    score.draw++;
+                    return 'Match Draw';
+                }else if(choice==='BAT'){
+                    score.lose++;
+                    return 'You lose';
+                }else if(choice==='STUMPS'){
+                    score.win++;
+                    return 'You Won';
+                }
+            }else if(userChoice==='STUMPS'){
+                if(choice==='BALL'){
+                    score.lose++;
+                    return 'You lose';
+                }else if(choice==='BAT'){
+                    score.win++;
+                    return'You won';
+                }else if(choice==='STUMPS'){
+                    score.draw++;
+                    return 'Match Draw';
+                }
+            }
+        }
+        function result(userChoice, choice,resultMsg){
+                localStorage.setItem('score', JSON.stringify(score));
+                document.querySelector('#UserMove').innerText = 
+                userChoice ? `You chose: ${userChoice}` : '';
+                document.querySelector('#ComputerMove').innerText=
+                choice ? `You chose: ${choice}` : '';;
+                document.querySelector('#Result').innerText=resultMsg || "";
+                document.querySelector('#Score').innerText=score.displayScore();
+                
+            }
+    </script>
+    </div>
+</body>
+</html>
