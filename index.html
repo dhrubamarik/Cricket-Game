@@ -8,108 +8,133 @@
 </head>
 <body>
     <div id="container">
-    <h1>Bat Ball Stumps game</h1>
-    <button class="buttons" onclick="
-    let choice=computerChoice();
-    let resultMsg=game('BAT', choice);
-    result('BAT', choice,resultMsg);
-    "><img class="pictures" src="images/bat.png" alt="BAT"></button>
-    <button class="buttons" onclick="
-    choice=computerChoice();
-    resultMsg=game('BALL', choice);
-    result('BALL', choice,resultMsg);
-    "><img class="pictures" src="images/ball.png" alt="BALL"></button>
-    <button class="buttons" onclick="
-    choice=computerChoice();
-    resultMsg=game('STUMPS', choice);
-    result('STUMPS', choice,resultMsg);
-    "><img class="pictures" src="images/stump.png" alt="STUMPS"></button>
-    <div>
-        <h3 id="UserMove"></h3>
-        <h3 id="ComputerMove"></h3>
-        <h3 id="Result"></h3>
-        <h3 id="Score"></h3>
+
+        <div id="panel-left">
+            <span class="game-tag">Cricket</span>
+            <h1>Bat Ball Stumps</h1>
+            <div class="btn-row">
+                <button class="buttons" onclick="
+                let choice=computerChoice();
+                let resultMsg=game('BAT', choice);
+                result('BAT', choice, resultMsg);
+                "><img class="pictures" src="images/bat.png" alt="BAT">Bat</button>
+
+                <button class="buttons" onclick="
+                choice=computerChoice();
+                resultMsg=game('BALL', choice);
+                result('BALL', choice, resultMsg);
+                "><img class="pictures" src="images/ball.png" alt="BALL">Ball</button>
+
+                <button class="buttons" onclick="
+                choice=computerChoice();
+                resultMsg=game('STUMPS', choice);
+                result('STUMPS', choice, resultMsg);
+                "><img class="pictures" src="images/stump.png" alt="STUMPS">Stumps</button>
+            </div>
+        </div>
+
+        <div id="panel-right">
+            <div class="score-grid">
+                <div class="score-box">
+                    <div class="score-label">Wins</div>
+                    <div class="score-val" id="s-win">0</div>
+                </div>
+                <div class="score-box draw">
+                    <div class="score-label">Draws</div>
+                    <div class="score-val" id="s-draw">0</div>
+                </div>
+                <div class="score-box lose">
+                    <div class="score-label">Losses</div>
+                    <div class="score-val" id="s-lose">0</div>
+                </div>
+            </div>
+
+            <div class="moves-section">
+                <span class="move-tag">You</span>
+                <h3 id="UserMove">—</h3>
+                <div style="width:6px;height:6px;border-radius:50%;background:#D3D1C7;"></div>
+                <h3 id="ComputerMove">—</h3>
+                <span class="move-tag">CPU</span>
+            </div>
+
+            <h3 id="Result">Pick bat, ball, or stumps to play</h3>
+            <h3 id="Score"></h3>
+
+            <button id="reset" onclick="localStorage.clear(); resetScore();">Reset scores</button>
+        </div>
+
     </div>
-    <button id="reset" onclick="localStorage.clear();
-     resetScore();
-     ">RESET</button>
+
     <script>
-        let scorestr=localStorage.getItem('score');
+        let scorestr = localStorage.getItem('score');
         let score;
         resetScore(scorestr);
-        alert('Welcome to Bat Ball Stumps game. Choose your option and see if you can win against computer');  
-        function resetScore(scorestr){
-            if(scorestr!==undefined){
-                score=JSON.parse(scorestr);
-            }else{
-                score={
-                  win: 0,
-                  lose: 0,
-                  draw: 0,
-               };
+
+        function resetScore(scorestr) {
+            if (scorestr !== undefined) {
+                score = JSON.parse(scorestr);
+            } else {
+                score = { win: 0, lose: 0, draw: 0 };
             }
-            score.displayScore=function(){
-                return(`Wins: ${this.win}, Losses: ${this.lose}, Draws: ${this.draw}`);
+            score.displayScore = function () {
+                return (`Wins: ${this.win}, Losses: ${this.lose}, Draws: ${this.draw}`);
             }
             result();
         }
-        function computerChoice(){
-            let randomNumber=Math.random()*3;
-            if(randomNumber>0 && randomNumber<1){
-              return 'BAT';
-            }else if(randomNumber>1 && randomNumber<2){
-              return'BALL';
-            }else{
-              return'STUMPS';
+
+        function computerChoice() {
+            let randomNumber = Math.random() * 3;
+            if (randomNumber > 0 && randomNumber < 1) {
+                return 'BAT';
+            } else if (randomNumber > 1 && randomNumber < 2) {
+                return 'BALL';
+            } else {
+                return 'STUMPS';
             }
         }
-        function game(userChoice, choice){
-            if(userChoice==='BAT'){
-                if(choice==='BALL'){
-                    score.win++;
-                    return 'You won';
-                }else if(choice==='BAT'){
-                    score.draw++;
-                    return 'Match Draw';
-                }else if(choice==='STUMPS'){
-                    score.lose++;
-                    return 'You Lose';                   
-                }
-            }else if(userChoice==='BALL'){
-                if(choice==='BALL'){
-                    score.draw++;
-                    return 'Match Draw';
-                }else if(choice==='BAT'){
-                    score.lose++;
-                    return 'You lose';
-                }else if(choice==='STUMPS'){
-                    score.win++;
-                    return 'You Won';
-                }
-            }else if(userChoice==='STUMPS'){
-                if(choice==='BALL'){
-                    score.lose++;
-                    return 'You lose';
-                }else if(choice==='BAT'){
-                    score.win++;
-                    return'You won';
-                }else if(choice==='STUMPS'){
-                    score.draw++;
-                    return 'Match Draw';
-                }
+
+        function game(userChoice, choice) {
+            if (userChoice === 'BAT') {
+                if (choice === 'BALL') { score.win++; return 'You won'; }
+                else if (choice === 'BAT') { score.draw++; return 'Match Draw'; }
+                else if (choice === 'STUMPS') { score.lose++; return 'You Lose'; }
+            } else if (userChoice === 'BALL') {
+                if (choice === 'BALL') { score.draw++; return 'Match Draw'; }
+                else if (choice === 'BAT') { score.lose++; return 'You lose'; }
+                else if (choice === 'STUMPS') { score.win++; return 'You Won'; }
+            } else if (userChoice === 'STUMPS') {
+                if (choice === 'BALL') { score.lose++; return 'You lose'; }
+                else if (choice === 'BAT') { score.win++; return 'You won'; }
+                else if (choice === 'STUMPS') { score.draw++; return 'Match Draw'; }
             }
         }
-        function result(userChoice, choice,resultMsg){
-                localStorage.setItem('score', JSON.stringify(score));
-                document.querySelector('#UserMove').innerText = 
-                userChoice ? `You chose: ${userChoice}` : '';
-                document.querySelector('#ComputerMove').innerText=
-                choice ? `You chose: ${choice}` : '';;
-                document.querySelector('#Result').innerText=resultMsg || "";
-                document.querySelector('#Score').innerText=score.displayScore();
-                
+
+        function result(userChoice, choice, resultMsg) {
+            localStorage.setItem('score', JSON.stringify(score));
+            document.querySelector('#UserMove').innerText = userChoice ? userChoice : '—';
+            document.querySelector('#ComputerMove').innerText = choice ? choice : '—';
+            document.querySelector('#Result').innerText = resultMsg || 'Pick bat, ball, or stumps to play';
+
+            document.querySelector('#s-win').innerText = score.win;
+            document.querySelector('#s-draw').innerText = score.draw;
+            document.querySelector('#s-lose').innerText = score.lose;
+
+            const resultEl = document.querySelector('#Result');
+            resultEl.className = '';
+            if (resultMsg === 'You won' || resultMsg === 'You Won') {
+                resultEl.style.background = '#EAF3DE';
+                resultEl.style.color = '#27500A';
+            } else if (resultMsg === 'You Lose' || resultMsg === 'You lose') {
+                resultEl.style.background = '#FCEBEB';
+                resultEl.style.color = '#791F1F';
+            } else if (resultMsg === 'Match Draw') {
+                resultEl.style.background = '#FAEEDA';
+                resultEl.style.color = '#633806';
+            } else {
+                resultEl.style.background = '#F1EFE8';
+                resultEl.style.color = '#888780';
             }
+        }
     </script>
-    </div>
 </body>
 </html>

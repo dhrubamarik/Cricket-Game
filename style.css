@@ -1,27 +1,206 @@
-#container{
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #0f6e56;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 720px;
+    text-align: left;
+}
+
+/* LEFT PANEL — buttons */
+#panel-left {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.game-tag {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #0f6e56;
+    margin-bottom: 4px;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
     text-align: center;
-    margin-top: 50px;
+    margin-bottom: 20px;
 }
-.pictures{
-    height: 100px;
-    width: 100px;
-    
+
+.btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    width: 100%;
 }
-.buttons{
-    background-color: rgb(32, 164, 109);
-    height: 150px;
-    width:150px;
-    margin: 10px;
-    border: none;
-    border-radius: 30px;
+
+.buttons {
+    background-color: #EAF3DE;
+    border: 1.5px solid #97C459;
+    border-radius: 14px;
+    padding: 14px 6px 10px;
+    height: auto;
+    width: 100%;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #3B6D11;
+    transition: background 0.15s, transform 0.1s;
 }
-#reset{
-    background-color: rgb(213, 132, 117);
-    height: 50px;
-    width:100px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 30px;
+
+.buttons:hover {
+    background-color: #C0DD97;
+    transform: translateY(-2px);
+}
+
+.buttons:active {
+    transform: scale(0.96);
+}
+
+.pictures {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
+}
+
+/* RIGHT PANEL — results */
+#panel-right {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.score-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+}
+
+.score-box {
+    background: #EAF3DE;
+    border-radius: 12px;
+    padding: 10px 6px;
+    text-align: center;
+}
+
+.score-box.draw { background: #FAEEDA; }
+.score-box.lose { background: #FCEBEB; }
+
+.score-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #3B6D11;
+    margin-bottom: 2px;
+}
+
+.score-box.draw .score-label { color: #854F0B; }
+.score-box.lose .score-label { color: #A32D2D; }
+
+.score-val {
+    font-size: 22px;
+    font-weight: 700;
+    color: #27500A;
+}
+
+.score-box.draw .score-val { color: #412402; }
+.score-box.lose .score-val { color: #501313; }
+
+.moves-section {
+    background: #F1EFE8;
+    border-radius: 14px;
+    padding: 14px 16px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.move-tag {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888780;
+}
+
+#UserMove, #ComputerMove {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2C2C2A;
+    background: #fff;
+    border: 0.5px solid #D3D1C7;
+    border-radius: 8px;
+    padding: 3px 10px;
+}
+
+#Result {
+    text-align: center;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    background: #F1EFE8;
+    color: #888780;
+}
+
+#Score {
+    display: none; /* hidden — scores shown in score-grid boxes instead */
+}
+
+#reset {
+    background: transparent;
+    border: 1.5px solid #E24B4A;
+    border-radius: 10px;
+    color: #A32D2D;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 16px;
+    height: auto;
+    width: auto;
+    margin-top: 0;
     cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    align-self: flex-end;
+    transition: background 0.15s;
 }
+
+#reset:hover { background: #FCEBEB; }
